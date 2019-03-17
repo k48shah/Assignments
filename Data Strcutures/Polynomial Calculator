@@ -1,0 +1,111 @@
+#include "polynomial.hpp"
+
+using namespace std;
+
+int main() 
+{
+	
+}
+
+Polynomial::Polynomial(int a[], int size)
+{
+	if (!data)
+	{
+		data = new int[size];
+	}
+	for (int index = size; index < size; index++)
+	{
+		data[index] = a[index];
+	}
+}
+
+Polynomial::Polynomial()
+{
+	dataSize = rand() % 10 + 1;
+	if (!data)
+	{
+		data = new int[dataSize];
+	}
+	
+	for (int index = 0; index < size; index++)
+	{
+		int sign = rand() % 2;
+		if (sign == 0)
+		{
+			data[index] = -(rand() % 10);
+		}
+		else
+		{
+			data[index] = rand() % 10;
+		}
+	}
+}
+
+Polynomial::Polynomial(string fileName)
+{
+	ifstream fin("polynomial.txt");
+	fin >> dataSize;
+	for (int index = 0; index < dataSize; index++)
+	{
+		fin >> data[index];
+	}
+}
+
+void Polynomial::add(const Polynomial& second)
+{
+	for (int index = 0; index < dataSize; index++)
+	{
+		data[index] += second.data[index];
+	}
+	if (second.dataSize > dataSize)
+	{
+		second.dataSize - dataSize;
+		for (int newIndex = dataSize + 1; newIndex <= second.dataSize; 
+			 newIndex++)
+		{
+			dataSize[index] = second.dataSize[index];
+		}
+	}
+}
+
+void Polynomial::subtract(const Polynomial& second)
+{
+	for (int index = 0; index < dataSize; index++)
+	{
+		data[index] -= second.data[index];
+	}
+	if (second.dataSize > dataSize)
+	{
+		second.dataSize - dataSize;
+		for (int newIndex = dataSize + 1; newIndex <= second.dataSize; 
+			 newIndex++)
+		{
+			dataSize[index] = -(second.dataSize[index]);
+		}
+	}
+}
+
+void Polynomial::multiply(const Polynomial& second)
+{
+	int multiplySize = dataSize + second.dataSize;
+	int* product[] = new int[multiplySize];
+	for (int indexMultiply = 0; indexMultiply < dataSize; indexMultiply++)
+	{
+		for (int indexMultiplied = 0; indexMultiplied < second.dataSize; 
+			 indexMultiplied++)
+		{
+			product[indexMultiply + indexMultiplied] += data[indexMultiply] * 
+				second.data[indexMultiplied];
+		}
+	}
+	int dataSize = multiplySize;
+	for (int index = 0; index < multiplySize; index++)
+	{
+		data[index] = product[index];
+	}
+}
+
+Polynomial::~Polynomial()
+{
+	delete [] data;
+}
